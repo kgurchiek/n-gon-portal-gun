@@ -3288,7 +3288,7 @@ const level = {
         powerUps.chooseRandomPowerUp(425, 60); //spawns in ammo/heal/reroll at (x, y)
         
         powerUps.addResearchToLevel(); //run this at the end of your code, adds a reroll somewhere in your level
-	/*
+	
         if (level.levelsCleared === 0) { //if this is the 1st level of the game
             //wait to spawn power ups until unpaused
             //power ups don't spawn in experiment mode, so they don't get removed at the start of experiment mode
@@ -3334,6 +3334,7 @@ const level = {
                 }, 2000 + 500 * i);
             }
         }
+	/*
         const wires = new Path2D() //pre-draw the complex lighting path to save processing
         wires.moveTo(-150, -275)
         wires.lineTo(80, -275)
