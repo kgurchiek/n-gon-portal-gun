@@ -3249,11 +3249,11 @@ const level = {
 		}; //for dynamic stuff that updates while playing that is one Z layer above the player
 	
 	//LEVEL SETUP
-	level.setPosToSpawn(x, y); //you spawn at x, y
+	level.setPosToSpawn(425, 60); //you spawn at x, y
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20); //don't change this
 
-        level.exit.x = 10300; //you exit at x
-        level.exit.y = -830; //you exit at y
+        level.exit.x = 850; //you exit at x
+        level.exit.y = -50; //you exit at y
         spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20); //don't change this
 
         level.defaultZoom = 3000 //how far out you want the image to be zoomed at (lower = zoom in, higher = zoom out)
@@ -3261,22 +3261,31 @@ const level = {
         document.body.style.backgroundColor = "#dcdcde"; //sets background color
         
         //LEVEL STRUCTURE
+	/*
         spawn.mapRect(x, y, w, h); //spawn a rectangle with width w and height h at (x, y)
         spawn.bodyRect(x, y, w, h); //spawn a block with width w and height h at (x, y)
         spawn.debris(x, y, w, dc); //spawn in a number of randomly sized small blocks, ammo, or heals equal to dc at (x, y) over the area of w
         spawn.randomMob(x, y, c); //spawn a mob at (x, y) with a c percent default chance of spawning in (i.e. 0.6 = 60% chance)
         spawn.randomGroup(x, y, c); //spawn in a group of mobs at (x, y) with a c percent default chance of spawning in ^
         spawn.randomSmallMob(x, y, c); //save as spawn.randomMob(x, y, c); except it spawns a small mob
-    
+	*/
+	spawn.bodyRect(625, -175, 25, 25);
+	spawn.mapRect(125, 125, 800, 250);
+	spawn.bodyRect(700, -125, 25, 25);
+	spawn.randomMob(1375, -400, 0);
+	spawn.randomMob(1025, -525, 0);
+
+    	/*
         if (simulation.difficulty > d) {
             spawn.randomLevelBoss(x, y, [list of bosses (optional)]); //spawn a boss from the list of bosses at (x, y). The list can be structured like so: ["nameOfBoss", "nameOfBoss", etc]
             } //checks if the difficulty is above d before spawning in a level boss (d is the difficulty)
         if (tech.isDuplicateBoss && Math.random() < 2 * tech.duplicationChance()) {
             spawn.randomLevelBoss(x, y, [list of bosses (optional)]);
             } //parthenogenesis tech
+	*/
     
-        powerUps.spawnStartingPowerUps(x, y); //spawns in some tech/gun/field/ammo/heals/rerolls at (x, y)
-        powerUps.chooseRandomPowerUp(x, y); //spawns in ammo/heal/reroll at (x, y)
+        powerUps.spawnStartingPowerUps(425, 60); //spawns in some tech/gun/field/ammo/heals/rerolls at (x, y)
+        powerUps.chooseRandomPowerUp(425, 60); //spawns in ammo/heal/reroll at (x, y)
         
         powerUps.addResearchToLevel(); //run this at the end of your code, adds a reroll somewhere in your level
 	/*
