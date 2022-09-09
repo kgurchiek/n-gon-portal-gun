@@ -1491,8 +1491,8 @@ const level = {
         };
         level.customTopLayer = () => {};
         level.setPosToSpawn(0, -50); //normal spawn
-        level.exit.x = 1500;
-        level.exit.y = -1875;
+        level.exit.x = 700;
+        level.exit.y = 0;
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
         level.defaultZoom = 1800
         simulation.zoomTransition(level.defaultZoom)
@@ -1501,6 +1501,11 @@ const level = {
         // spawn.debris(750, -2200, 3700, 16); //16 debris per level
 
         spawn.mapRect(-100, 0, 1000, 100);
+	spawn.randomMob(525, -450, 0);
+	spawn.randomMob(650, -225, 0);
+	spawn.mapRect(-325, -725, 225, 825);
+	spawn.mapRect(875, -675, 275, 775);
+
         // spawn.bodyRect(1540, -1110, 300, 25, 0.9); 
         // spawn.randomSmallMob(1300, -70);
         // spawn.randomMob(2650, -975, 0.8);
