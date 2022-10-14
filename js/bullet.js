@@ -2335,10 +2335,14 @@ const b = {
                 level.bluePortal.y = best.y - (75 * Math.sin(angle));
                 level.bluePortal.angle = angle;
               }
+              else {
+                //Matter.Composite.remove(engine.world, map[map.length - 1]);
+              }
               
               level.orangePortal.x = best.x - (75 * Math.cos(angle));
               level.orangePortal.y = best.y - (75 * Math.sin(angle));
               level.orangePortal.angle = angle;
+              //spawn.mapRect(bluePortal.x - 50, orangePortal.y - 50, orangePortal.x + 50, orangePortal.y + 50);
               level.hasCreatedOrangePortal = true;
             }
             else
@@ -2348,10 +2352,14 @@ const b = {
                 level.orangePortal.y = best.y - (75 * Math.sin(angle));
                 level.orangePortal.angle = angle;
               }
+              else {
+                //Matter.Composite.remove(engine.world, map[map.length - 1]);
+              }
               
               level.bluePortal.x = best.x - (75 * Math.cos(angle));
               level.bluePortal.y = best.y - (75 * Math.sin(angle));
               level.bluePortal.angle = angle;
+              //spawn.mapRect(bluePortal.x - 50, bluePortal.y - 50, bluePortal.x + 50, bluePortal.y + 50);
               level.hasCreatedBluePortal = true;
             }
           
@@ -7186,10 +7194,10 @@ const b = {
             angle: 0,
             do() {},
             fire() {
-                const drain = 0.005
+                const drain = 0.01
                 if (m.energy < drain) {
                     m.fireCDcycle = m.cycle + 100; // cool down if out of energy
-                } else {
+                } else if (m.cycle - m.lastUsedPortalCycle > 5) {
                     m.fireCDcycle = m.cycle
                     m.energy -= drain
                     const where = {
@@ -7201,6 +7209,7 @@ const b = {
                         y: where.y + 3000 * Math.sin(m.angle)
                     }, tech.laserDamage / b.fireCDscale * this.lensDamage);
                 }
+            m.lastUsedPortalCycle = m.cycle;
             },
         },
         
