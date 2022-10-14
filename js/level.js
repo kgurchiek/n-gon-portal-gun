@@ -21,7 +21,7 @@ const level = {
     levelsCleared: 0,
     // playableLevels: ["pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion"],
     //see level.populateLevels:   (intro, ... , reservoir, reactor, ... , gauntlet, final)    added later
-    playableLevels: ["cornbread", "labs", "rooftops", "skyscrapers", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber", "pavilion"],
+    playableLevels: ["labs", "rooftops", "skyscrapers", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber", "pavilion"],
     communityLevels: ["stronghold", "basement", "crossfire", "vats", "run", "n-gon", "house", "perplex", "coliseum", "tunnel", "islands", "temple", "dripp", "biohazard"],
     trainingLevels: ["walk", "crouch", "jump", "hold", "throw", "throwAt", "deflect", "heal", "fire", "nailGun", "shotGun", "superBall", "matterWave", "missile", "stack", "mine", "grenades", "harpoon"],
     levels: [],
@@ -30,7 +30,7 @@ const level = {
             if (simulation.isTraining) {
               level.walk();
             } else { 
-              level.cornbread();
+              level.intro();
               level.oldCustomTopLayer = level.customTopLayer;
             }
         } else {
@@ -1467,49 +1467,6 @@ const level = {
     //******************************************************************************************************************
     //******************************************************************************************************************
     //******************************************************************************************************************
-    cornbread() {
-        level.custom = () => {
-            level.exit.drawAndCheck();
-
-            level.enter.draw();
-        };
-        level.setPosToSpawn(0, -50); //normal spawn
-        level.exit.x = 700;
-        level.exit.y = -40;
-        spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
-        level.defaultZoom = 1800
-        simulation.zoomTransition(level.defaultZoom)
-        document.body.style.backgroundColor = "#d8dadf";
-        // powerUps.spawnStartingPowerUps(1475, -1175);
-        // spawn.debris(750, -2200, 3700, 16); //16 debris per level
-        spawn.mapRect(700, -10, 100, 10); //exit step
-        spawn.mapRect(-100, 0, 1000, 100);
-	      spawn.mapRect(-325, -725, 225, 825);
-	      spawn.mapRect(875, -675, 275, 775);
-        let portal;
-        portal = level.portal({
-          x: -75,
-          y: -400
-        }, 2 * Math.PI, {
-          x: 850,
-          y: -400
-        }, 3 * Math.PI);
-        level.customTopLayer = () => {
-          portal[2].query();
-          portal[3].query();
-          portal[0].draw();
-          portal[1].draw();
-          portal[2].draw();
-          portal[3].draw();
-        };
-
-        // spawn.bodyRect(1540, -1110, 300, 25, 0.9); 
-        // spawn.randomSmallMob(1300, -70);
-        // spawn.randomMob(2650, -975, 0.8);
-        // spawn.randomGroup(1700, -900, 0.4);
-        // if (simulation.difficulty > 1) spawn.randomLevelBoss(2200, -1300);
-        powerUps.addResearchToLevel() //needs to run after mobs are spawned
-    },
     labs() {
         level.isProcedural = true //used in generating text it the level builder
         level.defaultZoom = 1700
