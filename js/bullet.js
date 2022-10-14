@@ -7197,7 +7197,7 @@ const b = {
                 const drain = 0.01
                 if (m.energy < drain) {
                     m.fireCDcycle = m.cycle + 100; // cool down if out of energy
-                } else if (m.cycle - m.lastUsedPortalCycle > 5 || lastUsedPortalCycle == 0) {
+                } else if (m.cycle - m.lastUsedPortalCycle > 5 || m.lastUsedPortalCycle == 0) {
                     m.fireCDcycle = m.cycle
                     m.energy -= drain
                     const where = {
