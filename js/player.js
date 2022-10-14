@@ -912,6 +912,7 @@ const m = {
     throwCharge: 0,
     fireCDcycle: 0,
     fieldCDcycle: 0,
+    lastUsedPortalCycle: 0,
     fieldMode: 0, //basic field mode before upgrades
     maxEnergy: 1, //can be increased by a tech
     holdingTarget: null,
