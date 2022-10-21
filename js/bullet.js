@@ -2335,14 +2335,10 @@ const b = {
                 level.bluePortal.y = best.y - (75 * Math.sin(angle));
                 level.bluePortal.angle = angle;
               }
-              else {
-                //Matter.Composite.remove(engine.world, map[map.length - 1]);
-              }
               
               level.orangePortal.x = best.x - (75 * Math.cos(angle));
               level.orangePortal.y = best.y - (75 * Math.sin(angle));
               level.orangePortal.angle = angle;
-              //spawn.mapRect(bluePortal.x - 50, orangePortal.y - 50, orangePortal.x + 50, orangePortal.y + 50);
               level.hasCreatedOrangePortal = true;
             }
             else
@@ -2352,14 +2348,10 @@ const b = {
                 level.orangePortal.y = best.y - (75 * Math.sin(angle));
                 level.orangePortal.angle = angle;
               }
-              else {
-                //Matter.Composite.remove(engine.world, map[map.length - 1]);
-              }
               
               level.bluePortal.x = best.x - (75 * Math.cos(angle));
               level.bluePortal.y = best.y - (75 * Math.sin(angle));
               level.bluePortal.angle = angle;
-              //spawn.mapRect(bluePortal.x - 50, bluePortal.y - 50, bluePortal.x + 50, bluePortal.y + 50);
               level.hasCreatedBluePortal = true;
             }
           
@@ -2436,6 +2428,86 @@ const b = {
         }
         ctx.setLineDash([]);
         ctx.globalAlpha = 1;
+
+        /*
+        var getBluePortalMove = function(distance, angle) {
+            var x = 0 - distance * Math.cos(level.bluePortal.angle + (angle * (Math.PI/180)));
+            var y = 0 - distance * Math.sin(level.bluePortal.angle + (angle * (Math.PI/180)));
+            return [x, y];
+        };
+
+        var getOrangePortalMove = function(distance, angle) {
+            var x = 0 - (distance * Math.cos(level.orangePortal.angle + (angle * (Math.PI/180))));
+            var y = 0 - (distance * Math.sin(level.orangePortal.angle + (angle * (Math.PI/180))));
+            return [x, y];
+        };
+        */
+      
+        //delete old map element
+        
+        if(level.hasCreatedBluePortal || level.hasCreatedOrangePortal) {
+            for(var i = 0; i < 2; i++) { //twice, for each portal
+                const index = map.length - 1;
+                Matter.Composite.remove(engine.world, map[index]);
+                map.splice(index, 1);
+                simulation.draw.setPaths();
+            }
+        }
+        
+
+        //alert(level.bluePortal.angle);
+        //create a map element for blue portal
+        /*
+        spawn.mapVertex(level.bluePortal.x, level.bluePortal.y, getBluePortalMove(77.5, 90)[0].toString() + " 0 " + getBluePortalMove(77.5, 90)[0].toString() + " " + getBluePortalMove(-200, 0)[1].toString() + " 0 " + getBluePortalMove(-200, 0)[1].toString() + " " + getBluePortalMove(77.5, 270)[0].toString() + " 0");
+        */
+        
+        if(level.bluePortal.angle < 0.1 && level.bluePortal.angle > -0.1) { //right
+          spawn.mapRect(level.bluePortal.x, level.bluePortal.y - 80, 200, 160);
+        }
+
+        if(level.bluePortal.angle > -3.15 && level.bluePortal.angle < -3.13) { //left
+          spawn.mapRect(level.bluePortal.x, level.bluePortal.y - 80, -200, 160);
+        }
+      
+        if(level.bluePortal.angle < -1.56 && level.bluePortal.angle > -1.58) { //roof
+          spawn.mapRect(level.bluePortal.x - 80, level.bluePortal.y, 160, -200);
+        }
+        
+        if(level.bluePortal.angle > 1.56 && level.bluePortal.angle < 1.58) {
+          spawn.mapRect(level.bluePortal.x - 80, level.bluePortal.y, 160, 200);
+        } //floor
+        
+        len = map.length - 1;
+        map[len].collisionFilter.category = cat.map;
+        map[len].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
+        Matter.Body.setStatic(map[len], true); //make static
+        Composite.add(engine.world, map[len]); //add to world
+        simulation.draw.setPaths(); //update map graphics
+        
+        
+        //create a map element for orange portal
+        if(level.orangePortal.angle < 0.1 && level.orangePortal.angle > -0.1) { //right
+          spawn.mapRect(level.orangePortal.x, level.orangePortal.y - 80, 200, 160);
+        }
+
+        if(level.orangePortal.angle > -3.15 && level.orangePortal.angle < -3.13) { //left
+          spawn.mapRect(level.orangePortal.x, level.orangePortal.y - 80, -200, 160);
+        }
+      
+        if(level.orangePortal.angle < -1.56 && level.orangePortal.angle > -1.58) { //roof
+          spawn.mapRect(level.orangePortal.x - 80, level.orangePortal.y, 160, -200);
+        }
+        
+        if(level.orangePortal.angle > 1.56 && level.orangePortal.angle < 1.58) {
+          spawn.mapRect(level.orangePortal.x - 80, level.orangePortal.y, 160, 200);
+        } //floor
+      
+        len = map.length - 1;
+        map[len].collisionFilter.category = cat.map;
+        map[len].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
+        Matter.Body.setStatic(map[len], true);
+        Composite.add(engine.world, map[len]);
+        simulation.draw.setPaths();
     },
     laser(where = {
         x: m.pos.x + 20 * Math.cos(m.angle),
@@ -7197,7 +7269,7 @@ const b = {
                 const drain = 0.01
                 if (m.energy < drain) {
                     m.fireCDcycle = m.cycle + 100; // cool down if out of energy
-                } else if ((m.cycle - m.lastUsedPortalCycle > 5) || (m.lastUsedPortalCycle == 0)) {
+                } else if (m.cycle - m.lastUsedPortalCycle > 5 || m.lastUsedPortalCycle == 0) {
                     m.fireCDcycle = m.cycle
                     m.energy -= drain
                     const where = {
