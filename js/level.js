@@ -16,6 +16,8 @@ const level = {
     },
     hasCreatedBluePortal: false,
     hasCreatedOrangePortal: false,
+    hasCreatedBluePortalMap: false,
+    hasCreatedOrangePortalMap: false,
     defaultZoom: 1400,
     onLevel: -1,
     levelsCleared: 0,
