@@ -2445,37 +2445,38 @@ const b = {
       
         //delete old map element
         
-        if(level.hasCreatedBluePortal || level.hasCreatedOrangePortal) {
-            for(var i = 0; i < 2; i++) { //twice, for each portal
-                const index = map.length - 1;
-                Matter.Composite.remove(engine.world, map[index]);
-                map.splice(index, 1);
-                simulation.draw.setPaths();
-            }
+        if(level.hasCreatedBluePortalMap) {
+            const index = map.length - 1;
+            Matter.Composite.remove(engine.world, map[index]);
+            map.splice(index, 1);
+            simulation.draw.setPaths();
         }
-        
+        if(level.hasCreatedOrangePortalMap) {
+            const index = map.length - 1;
+            Matter.Composite.remove(engine.world, map[index]);
+            map.splice(index, 1);
+            simulation.draw.setPaths();
+        }
 
         //alert(level.bluePortal.angle);
         //create a map element for blue portal
         /*
         spawn.mapVertex(level.bluePortal.x, level.bluePortal.y, getBluePortalMove(77.5, 90)[0].toString() + " 0 " + getBluePortalMove(77.5, 90)[0].toString() + " " + getBluePortalMove(-200, 0)[1].toString() + " 0 " + getBluePortalMove(-200, 0)[1].toString() + " " + getBluePortalMove(77.5, 270)[0].toString() + " 0");
         */
-        
+
+        //create map element for blue portal
+        level.hasCreatedBluePortalMap = true;
         if(level.bluePortal.angle < 0.1 && level.bluePortal.angle > -0.1) { //right
           spawn.mapRect(level.bluePortal.x, level.bluePortal.y - 80, 200, 160);
-        }
-
-        if(level.bluePortal.angle > -3.15 && level.bluePortal.angle < -3.13) { //left
+        } else if(level.bluePortal.angle > -3.15 && level.bluePortal.angle < -3.13) { //left
           spawn.mapRect(level.bluePortal.x, level.bluePortal.y - 80, -200, 160);
-        }
-      
-        if(level.bluePortal.angle < -1.56 && level.bluePortal.angle > -1.58) { //roof
+        } else if(level.bluePortal.angle < -1.56 && level.bluePortal.angle > -1.58) { //roof
           spawn.mapRect(level.bluePortal.x - 80, level.bluePortal.y, 160, -200);
-        }
-        
-        if(level.bluePortal.angle > 1.56 && level.bluePortal.angle < 1.58) {
+        } else if(level.bluePortal.angle > 1.56 && level.bluePortal.angle < 1.58) { //floor
           spawn.mapRect(level.bluePortal.x - 80, level.bluePortal.y, 160, 200);
-        } //floor
+        } else {
+          level.hasCreatedBluePortalMap = false;
+        }
         
         len = map.length - 1;
         map[len].collisionFilter.category = cat.map;
@@ -2486,21 +2487,18 @@ const b = {
         
         
         //create a map element for orange portal
+        level.hasCreatedOrangePortalMap = true;
         if(level.orangePortal.angle < 0.1 && level.orangePortal.angle > -0.1) { //right
           spawn.mapRect(level.orangePortal.x, level.orangePortal.y - 80, 200, 160);
-        }
-
-        if(level.orangePortal.angle > -3.15 && level.orangePortal.angle < -3.13) { //left
+        } else if(level.orangePortal.angle > -3.15 && level.orangePortal.angle < -3.13) { //left
           spawn.mapRect(level.orangePortal.x, level.orangePortal.y - 80, -200, 160);
-        }
-      
-        if(level.orangePortal.angle < -1.56 && level.orangePortal.angle > -1.58) { //roof
+        } else if(level.orangePortal.angle < -1.56 && level.orangePortal.angle > -1.58) { //roof
           spawn.mapRect(level.orangePortal.x - 80, level.orangePortal.y, 160, -200);
-        }
-        
-        if(level.orangePortal.angle > 1.56 && level.orangePortal.angle < 1.58) {
+        } else if(level.orangePortal.angle > 1.56 && level.orangePortal.angle < 1.58) { //floor
           spawn.mapRect(level.orangePortal.x - 80, level.orangePortal.y, 160, 200);
-        } //floor
+        } else {
+          level.hasCreatedOrangePortalMap = false;
+        }
       
         len = map.length - 1;
         map[len].collisionFilter.category = cat.map;
